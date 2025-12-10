@@ -1,0 +1,95 @@
+/* Estilos Gerais */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+#status {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 1. O Contêiner do Tabuleiro */
+#tabuleiro {
+    display: grid;
+    /* Define 7 colunas de largura igual (ex: 80px) */
+    grid-template-columns: repeat(7, 80px); 
+    /* Define 6 linhas de altura igual (ex: 80px) */
+    grid-template-rows: repeat(6, 80px);
+    
+    background-color: #b32128; /* Cor azul clássica do tabuleiro */
+    border: 0px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    position: relative; /* Essencial para posicionar as peças absolutamente */
+}
+
+/* 2. Estilo das Células e Colunas de Clique */
+.coluna {
+    /* Ocupa as 6 linhas visualmente */
+    grid-row: 1 / span 6; 
+    /* Posiciona as colunas sequencialmente de 1 a 7 */
+    grid-column: calc(var(--col) + 1); 
+
+    /* Altura total da coluna para detectar o clique */
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    z-index: 10; /* Fica acima das peças para capturar o clique */
+    transition: background-color 0.1s;
+}
+
+.coluna:hover {
+    background-color: rgba(255, 255, 255, 0.651); /* Efeito visual ao passar o mouse */
+}
+
+/* 3. Estilo da Peça (Círculo) */
+.peca {
+    /* A peça será posicionada absolutamente dentro do #tabuleiro */
+    position: absolute;
+    width: 70px; /* Um pouco menor que o slot (80px) */
+    height: 70px;
+    border-radius: 50%;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    
+    /* Prepara para a animação de queda */
+    transition: transform 0.5s cubic-bezier(0.5, 0.1, 0.3, 1.5); 
+}
+
+/* 4. Cores das Peças */
+.vermelho {
+    background-color: #0400ff;
+}
+
+.amarelo {
+    background-color: #ffff00;
+}
+
+#moldura {
+    position: absolute; /* Essencial para posicionar sobre o tabuleiro */
+    
+    /* Z-index maior que as peças (5) e colunas de clique (10) */
+    /* Isso garante que a moldura SEMPRE esteja por cima de tudo */
+    z-index: 15; 
+    
+    /* CENTRALIZAR SOBRE O TABULEIRO */
+    /* top/left 50% posiciona o canto superior esquerdo da imagem no centro */
+    top: 38%;
+    left: 50%;
+    /* transform: translate(-50%, -50%) desloca a imagem de volta pelo seu próprio centro */
+    transform: translate(-50%, -50%); 
+    
+    /* Ajuste de largura/altura para corresponder ao tabuleiro */
+    /* Pode ser uma largura fixa ou baseada no tabuleiro. */
+    /* Ex: Se seu tabuleiro tem (7*80 + 2*10) = 580px de largura total */
+    width: 2000px; /* Ajuste para a largura exata do seu tabuleiro com padding */
+    height: 2000px; /* Ajuste para a altura exata do seu tabuleiro com padding */
+
+    /* Garante que a imagem não distorça */
+    object-fit: contain; 
+    pointer-events: none; /* NOVO: Impede que a moldura bloqueie os cliques nas colunas */
+}
